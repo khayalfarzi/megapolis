@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: load csv
+      author: Khayal Farziyev
+      changes:
+        - loadData:
+            catalogName: cities
+            columns:
+              - column:
+                  header: id
+                  name: id
+                  type: numeric
+              - column:
+                  header: name
+                  name: name
+                  type: string
+              - column:
+                  header: photo
+                  name: photo_url
+                  type: string
+            commentLineStartsWith: //
+            encoding: UTF-8
+            file: ../../files/cities.csv
+            relativeToChangelogFile: true
+            tableName: cities
+            usePreparedStatements: true
+            separator: ","
