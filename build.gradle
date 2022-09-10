@@ -48,7 +48,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
 
     // database
-    runtimeOnly 'org.postgresql:postgresql:42.5.0'
+    implementation 'com.h2database:h2:2.1.214'
 
     //mapstruct
     implementation('org.mapstruct:mapstruct-jdk8:1.3.0.Final')
