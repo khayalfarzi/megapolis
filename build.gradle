@@ -10,7 +10,6 @@ apply plugin: 'groovy'
 apply plugin: 'jacoco'
 
 group = 'com.company'
-version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 configurations {
