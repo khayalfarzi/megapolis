@@ -1,7 +1,7 @@
 package com.company.citylist.controller;
 
-import com.company.citylist.model.dto.ExceptionResponse;
-import com.company.citylist.model.exception.NotFoundException;
+import com.company.citylist.domain.dto.ExceptionResponse;
+import com.company.citylist.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
