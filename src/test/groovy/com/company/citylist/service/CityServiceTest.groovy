@@ -1,16 +1,12 @@
 package com.company.citylist.service
 
-import com.company.citylist.dao.entity.CityEntity
-import com.company.citylist.dao.repository.CityRepository
-import com.company.citylist.mapper.CityMapper
-import com.company.citylist.model.dto.CityDto
-import com.company.citylist.model.exception.NotFoundException
+import com.company.citylist.domain.model.City
+import com.company.citylist.repository.CityRepository
+import com.company.citylist.domain.dto.CityDto
+import com.company.citylist.exception.NotFoundException
 import io.github.benas.randombeans.EnhancedRandomBuilder
-import org.mockito.Mockito
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import spock.lang.Specification
 
@@ -27,17 +23,16 @@ class CityServiceTest extends Specification {
 
     def "findAll success"() {
         given:
-        def entities = List.of(random.nextObject(CityEntity))
+        def entities = List.of(random.nextObject(City))
         def pageRequest = PageRequest.of(1, 10)
-        def pageable = new PageImpl<>(entities, pageRequest, entities.size())
-        def response = List.of(new CityDto(entities[0].id, entities[0].name, entities[0].photo))
+        def response = new PageImpl<>(entities, pageRequest, entities.size())
         def page = PageRequest.of(10, 1, Sort.by("id").ascending())
 
         when:
         def result = cityService.findAll(page)
 
         then:
-        repository.findAll(page) >> pageable
+        repository.findAll(page) >> response
 
         result == response
     }
@@ -45,7 +40,7 @@ class CityServiceTest extends Specification {
     def "findByName success"() {
         given:
         def name = "London"
-        def entity = Optional.of(random.nextObject(CityEntity))
+        def entity = Optional.of(random.nextObject(City))
         def response = new CityDto(entity.get().getId(), entity.get().getName(), entity.get().getPhoto())
 
         when:
@@ -74,7 +69,7 @@ class CityServiceTest extends Specification {
     def "update success"() {
         given:
         def request = random.nextObject(CityDto)
-        def entity = Optional.of(random.nextObject(CityEntity))
+        def entity = Optional.of(random.nextObject(City))
         def updatedCity = entity.get()
         updatedCity.name = request.name
         updatedCity.photo = request.photo

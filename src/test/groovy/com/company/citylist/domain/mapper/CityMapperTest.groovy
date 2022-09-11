@@ -1,7 +1,8 @@
-package com.company.citylist.mapper
+package com.company.citylist.domain.mapper
 
-import com.company.citylist.dao.entity.CityEntity
-import com.company.citylist.model.dto.CityDto
+
+import com.company.citylist.domain.model.City
+import com.company.citylist.domain.dto.CityDto
 import io.github.benas.randombeans.EnhancedRandomBuilder
 import spock.lang.Specification
 
@@ -11,7 +12,7 @@ class CityMapperTest extends Specification {
 
     def "mapToDto"() {
         given:
-        def entity = random.nextObject(CityEntity)
+        def entity = random.nextObject(City)
         def response = new CityDto(entity.id, entity.name, entity.photo)
 
         when:

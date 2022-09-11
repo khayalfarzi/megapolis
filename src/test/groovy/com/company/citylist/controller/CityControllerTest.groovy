@@ -1,9 +1,11 @@
 package com.company.citylist.controller
 
-import com.company.citylist.model.dto.CityDto
+import com.company.citylist.domain.dto.CityDto
+import com.company.citylist.domain.model.City
 import com.company.citylist.service.CityService
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.github.benas.randombeans.EnhancedRandomBuilder
+import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver
@@ -33,7 +35,11 @@ class CityControllerTest extends Specification {
     def "findAll"() {
         given:
         def endpoint = "/cities?size=10&page=1&sort=id"
-        def response = List.of(random.nextObject(CityDto))
+        def cities = List.of(random.nextObject(City))
+        def citiesResponse =
+                List.of(new CityDto(cities.get(0).id, cities.get(0).name, cities.get(0).photo))
+        def cityServiceResponse = new PageImpl(cities)
+        def response = new PageImpl(citiesResponse)
         def page = PageRequest.of(1, 10, Sort.by("id"))
 
         when:
@@ -41,7 +47,7 @@ class CityControllerTest extends Specification {
                 .andReturn()
 
         then:
-        1 * cityService.findAll(page) >> response
+        1 * cityService.findAll(page) >> cityServiceResponse
 
         result.response.status == HttpStatus.OK.value()
         result.response.contentAsString == mapper.writeValueAsString(response)
