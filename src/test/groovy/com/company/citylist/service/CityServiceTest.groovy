@@ -40,16 +40,15 @@ class CityServiceTest extends Specification {
     def "findByName success"() {
         given:
         def name = "London"
-        def entity = Optional.of(random.nextObject(City))
-        def response = new CityDto(entity.get().getId(), entity.get().getName(), entity.get().getPhoto())
+        def response = Optional.of(random.nextObject(City))
 
         when:
         def result = cityService.findByName(name)
 
         then:
-        repository.findByName(name) >> entity
+        repository.findByName(name) >> response
 
-        response == result
+        response.get() == result
     }
 
     def "findByName when name not found"() {

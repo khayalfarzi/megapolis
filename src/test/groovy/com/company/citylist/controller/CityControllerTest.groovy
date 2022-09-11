@@ -56,14 +56,15 @@ class CityControllerTest extends Specification {
     def "findByName"() {
         given:
         def endpoint = "/cities/name/London"
-        def response = random.nextObject(CityDto)
+        def city = random.nextObject(City)
+        def response = new CityDto(city.id, city.name, city.photo)
 
         when:
         def result = mockMvc.perform(MockMvcRequestBuilders.get(endpoint))
                 .andReturn()
 
         then:
-        cityService.findByName("London") >> response
+        cityService.findByName("London") >> city
 
         result.response.status == HttpStatus.OK.value()
         result.response.contentAsString == mapper.writeValueAsString(response)
