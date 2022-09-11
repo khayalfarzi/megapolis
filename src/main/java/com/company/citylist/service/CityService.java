@@ -1,19 +1,15 @@
 package com.company.citylist.service;
 
-import com.company.citylist.dao.entity.CityEntity;
-import com.company.citylist.dao.repository.CityRepository;
-import com.company.citylist.mapper.CityMapper;
-import com.company.citylist.model.dto.CityDto;
-import com.company.citylist.model.exception.NotFoundException;
+import com.company.citylist.domain.model.City;
+import com.company.citylist.repository.CityRepository;
+import com.company.citylist.domain.mapper.CityMapper;
+import com.company.citylist.domain.dto.CityDto;
+import com.company.citylist.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CityService {
@@ -25,12 +21,10 @@ public class CityService {
         this.repository = repository;
     }
 
-    public List<CityDto> findAll(Pageable paging) {
+    public Page<City> findAll(Pageable paging) {
         log.info("ActionLog.findAll start.");
 
-        Page<CityEntity> pagedResult = repository.findAll(paging);
-
-        List<CityDto> cities = getPagingResult(pagedResult);
+        Page<City> cities = repository.findAll(paging);
 
         log.info("ActionLog.findAll end.");
 
@@ -40,7 +34,7 @@ public class CityService {
     public CityDto findByName(String name) {
         log.info("ActionLog.findByName start. #name: {}", name);
 
-        CityEntity entity = repository.findByName(name)
+        City entity = repository.findByName(name)
                 .orElseThrow(() -> new NotFoundException("NAME_NOT_FOUNDED"));
 
         CityDto dto = CityMapper.INSTANCE.mapToDto(entity);
@@ -53,7 +47,7 @@ public class CityService {
     public void update(CityDto city) {
         log.info("ActionLog.update start. #id: {}", city.getId());
 
-        CityEntity entity = repository.findById(city.getId())
+        City entity = repository.findById(city.getId())
                 .orElseThrow(() -> new NotFoundException("CITY_ID_NOT_FOUNDED"));
 
         entity.setName(city.getName());
@@ -62,15 +56,5 @@ public class CityService {
         repository.save(entity);
 
         log.info("ActionLog.update end. #id: {}", city.getId());
-    }
-
-    private List<CityDto> getPagingResult(Page<CityEntity> cityEntities) {
-
-        return cityEntities.hasContent() ?
-                cityEntities.getContent()
-                        .stream()
-                        .map(CityMapper.INSTANCE::mapToDto)
-                        .collect(Collectors.toList())
-                : new ArrayList<>();
     }
 }
