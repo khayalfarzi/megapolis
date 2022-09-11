@@ -1,4 +1,4 @@
-package com.company.citylist.model.exception;
+package com.company.citylist.exception;
 
 import lombok.Getter;
 
