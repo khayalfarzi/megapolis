@@ -31,17 +31,15 @@ public class CityService {
         return cities;
     }
 
-    public CityDto findByName(String name) {
+    public City findByName(String name) {
         log.info("ActionLog.findByName start. #name: {}", name);
 
         City entity = repository.findByName(name)
                 .orElseThrow(() -> new NotFoundException("NAME_NOT_FOUNDED"));
 
-        CityDto dto = CityMapper.INSTANCE.mapToDto(entity);
-
         log.info("ActionLog.findByName end. #name: {}", name);
 
-        return dto;
+        return entity;
     }
 
     public void update(CityDto city) {
