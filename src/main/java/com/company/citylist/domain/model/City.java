@@ -1,4 +1,4 @@
-package com.company.citylist.dao.entity;
+package com.company.citylist.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +20,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "cities")
-public class CityEntity {
+public class City {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

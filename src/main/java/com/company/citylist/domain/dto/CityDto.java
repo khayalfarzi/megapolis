@@ -1,4 +1,4 @@
-package com.company.citylist.model.dto;
+package com.company.citylist.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
