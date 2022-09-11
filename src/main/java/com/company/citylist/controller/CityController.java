@@ -29,7 +29,7 @@ public class CityController {
 
     @GetMapping("/name/{name}")
     public CityDto findByName(@PathVariable String name) {
-        return service.findByName(name);
+        return CityMapper.INSTANCE.mapToDto(service.findByName(name));
     }
 
     @PutMapping
