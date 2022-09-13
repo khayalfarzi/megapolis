@@ -3,6 +3,7 @@
 ## Table of Contents
 
 - [Introduction](#Introduction)
+- [Document](#Document)
 - [How to build](#how-to-build)
 - [How to run locally](#how-to-run-locally)
 - [API](#api)
@@ -10,6 +11,12 @@
 ## Introduction
 
 ### This application was developed to perform simple operations on given cities
+
+## Document
+### Swagger link
+```shell script
+$ http://localhost:8081/swagger-ui/index.html#/
+```
 
 ## How to build
 
